@@ -1,13 +1,35 @@
 import { type NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 
-// Inicialize o Stripe com sua chave secreta
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2023-10-16",
-})
+// Inicialize o Stripe com sua chave secreta apenas quando a rota for chamada
+// não durante o build
+let stripe: Stripe | null = null
+
+function getStripe() {
+  if (!stripe && process.env.STRIPE_SECRET_KEY) {
+    stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2023-10-16",
+    })
+  }
+  return stripe
+}
 
 export async function POST(request: NextRequest) {
   try {
+    const stripeInstance = getStripe()
+
+    // Verificar se o Stripe foi inicializado corretamente
+    if (!stripeInstance) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Stripe não foi inicializado. Verifique se a variável de ambiente STRIPE_SECRET_KEY está configurada.",
+        },
+        { status: 500 },
+      )
+    }
+
     const { amount, token, email, name } = await request.json()
 
     // Validar os dados
@@ -17,12 +39,12 @@ export async function POST(request: NextRequest) {
 
     // Criar um cliente no Stripe (ou recuperar um existente)
     let customer
-    const existingCustomers = await stripe.customers.list({ email })
+    const existingCustomers = await stripeInstance.customers.list({ email })
 
     if (existingCustomers.data.length > 0) {
       customer = existingCustomers.data[0]
     } else {
-      customer = await stripe.customers.create({
+      customer = await stripeInstance.customers.create({
         email,
         name,
         source: token,
@@ -30,7 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Criar um pagamento
-    const charge = await stripe.charges.create({
+    const charge = await stripeInstance.charges.create({
       amount: Math.round(amount), // Stripe trabalha com centavos
       currency: "usd",
       customer: customer.id,
