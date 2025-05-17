@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function AdminPage() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -15,27 +17,32 @@ export default function AdminPage() {
       <main className="flex-1 bg-gray-50 p-6">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
+          <p className="text-gray-500">Welcome to the Akin Quantum Hedge Fund admin dashboard</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <h2 className="text-lg font-medium text-gray-900">Total Users</h2>
             <p className="mt-2 text-3xl font-bold text-gray-900">1,234</p>
+            <p className="text-sm text-gray-500">+12% from last month</p>
           </div>
 
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <h2 className="text-lg font-medium text-gray-900">Total Investments</h2>
             <p className="mt-2 text-3xl font-bold text-gray-900">$5.6M</p>
+            <p className="text-sm text-gray-500">+8% from last month</p>
           </div>
 
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <h2 className="text-lg font-medium text-gray-900">Active Strategies</h2>
             <p className="mt-2 text-3xl font-bold text-gray-900">8</p>
+            <p className="text-sm text-gray-500">+2 from last month</p>
           </div>
 
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <h2 className="text-lg font-medium text-gray-900">Pending Transactions</h2>
             <p className="mt-2 text-3xl font-bold text-gray-900">42</p>
+            <p className="text-sm text-gray-500">-5 from last month</p>
           </div>
         </div>
 
@@ -84,6 +91,11 @@ export default function AdminPage() {
                 </tbody>
               </table>
             </div>
+            <div className="mt-4">
+              <Link href="/admin/transactions" className="text-sm text-blue-600 hover:text-blue-800">
+                View all transactions →
+              </Link>
+            </div>
           </div>
 
           <div className="rounded-lg bg-white p-6 shadow-sm">
@@ -116,6 +128,11 @@ export default function AdminPage() {
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div className="mt-4">
+              <Link href="/admin/users" className="text-sm text-blue-600 hover:text-blue-800">
+                View all users →
+              </Link>
             </div>
           </div>
         </div>

@@ -1,33 +1,15 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 
-export async function POST(request: NextRequest) {
-  try {
-    // Versão simulada que não depende do Stripe
-    const { amount, email, name } = await request.json()
+// Versão simplificada que sempre retorna sucesso com dados mockados
+export async function POST() {
+  // Simular um atraso para parecer real
+  await new Promise((resolve) => setTimeout(resolve, 500))
 
-    // Validar os dados
-    if (!amount || !email) {
-      return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 })
-    }
-
-    // Simular um ID de transação
-    const transactionId = `sim_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`
-
-    // Retornar uma resposta simulada
-    return NextResponse.json({
-      success: true,
-      paymentId: transactionId,
-      amount: Number(amount) / 100, // Converter de centavos para dólares
-      message: "Simulação de pagamento bem-sucedida. Stripe não está configurado no ambiente.",
-    })
-  } catch (error) {
-    console.error("Payment processing error:", error)
-    return NextResponse.json(
-      {
-        success: false,
-        message: error instanceof Error ? error.message : "An unknown error occurred",
-      },
-      { status: 500 },
-    )
-  }
+  // Retornar dados mockados de sucesso
+  return NextResponse.json({
+    success: true,
+    paymentId: `MOCK_${Date.now()}`,
+    amount: 10000,
+    message: "Mock payment successful. No actual payment processing occurred.",
+  })
 }

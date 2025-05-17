@@ -1,34 +1,18 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { Bitcoin, DollarSign, Info, Check, AlertCircle, CreditCard } from "lucide-react"
+import { Bitcoin, DollarSign, Info } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useToast } from "@/hooks/use-toast"
 import Link from "next/link"
-
-// Import the action directly
-import { sendInvestmentConfirmationEmail } from "@/app/api/email/actions"
-
-const formSchema = z.object({
-  investmentType: z.enum(["usd", "btc"]),
-  amount: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-    message: "Amount must be a positive number",
-  }),
-  strategy: z.string().min(1, { message: "Please select an investment strategy" }),
-  duration: z.string().min(1, { message: "Please select an investment duration" }),
-  riskLevel: z.number().optional(),
-})
 
 export function InvestmentForm() {
   const router = useRouter()
@@ -36,79 +20,28 @@ export function InvestmentForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [riskLevel, setRiskLevel] = useState([50])
   const [showConfirmation, setShowConfirmation] = useState(false)
-  const [formValues, setFormValues] = useState<z.infer<typeof formSchema> | null>(null)
-  const [emailStatus, setEmailStatus] = useState<{ success: boolean; message?: string } | null>(null)
+  const [investmentType, setInvestmentType] = useState("usd")
+  const [amount, setAmount] = useState("")
+  const [strategy, setStrategy] = useState("")
+  const [duration, setDuration] = useState("")
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      investmentType: "usd",
-      amount: "",
-      strategy: "",
-      duration: "",
-      riskLevel: 50,
-    },
-  })
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setFormValues(values)
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
     setShowConfirmation(true)
   }
 
   async function confirmInvestment() {
     setIsLoading(true)
-    setEmailStatus(null)
 
     try {
       // Simulate processing the investment
       await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // Generate a transaction ID
-      const transactionId = `TX${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 1000)}`
-
-      // Format the current date
-      const date = new Date().toLocaleString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-
-      // Send confirmation email
-      // In a real app, you would get the user's email from their session/auth
-      const userEmail = "investor@example.com" // This would come from auth context in a real app
-
-      const emailResult = await sendInvestmentConfirmationEmail(userEmail, {
-        investmentType: formValues?.investmentType || "usd",
-        amount: formValues?.amount || "0",
-        strategy: formValues?.strategy || "",
-        duration: formValues?.duration || "",
-        riskLevel: riskLevel[0],
-        transactionId,
-        date,
-      })
-
-      setEmailStatus(emailResult)
 
       // Show success toast
       toast({
         title: "Investment successful",
         description: "Your investment has been processed successfully",
       })
-
-      // If email was successful, show additional toast
-      if (emailResult.success) {
-        toast({
-          title: "Confirmation email sent",
-          description: `A confirmation email has been sent to ${userEmail}`,
-        })
-      }
-
-      // Wait a moment before redirecting if there was an email issue
-      if (!emailResult.success) {
-        await new Promise((resolve) => setTimeout(resolve, 3000))
-      }
 
       // Redirect to dashboard
       router.push("/dashboard")
@@ -136,159 +69,102 @@ export function InvestmentForm() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="investmentType"
-                    render={({ field }) => (
-                      <FormItem className="space-y-3">
-                        <FormLabel>Investment Currency</FormLabel>
-                        <FormControl>
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            className="flex flex-col space-y-1"
-                          >
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="usd" id="usd" />
-                              <FormLabel htmlFor="usd" className="flex items-center">
-                                <DollarSign className="mr-2 h-4 w-4" />
-                                USD
-                              </FormLabel>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="btc" id="btc" />
-                              <FormLabel htmlFor="btc" className="flex items-center">
-                                <Bitcoin className="mr-2 h-4 w-4" />
-                                BTC
-                              </FormLabel>
-                            </div>
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-3">
+                  <label className="text-sm font-medium">Investment Currency</label>
+                  <RadioGroup
+                    value={investmentType}
+                    onValueChange={setInvestmentType}
+                    className="flex flex-col space-y-1"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="usd" id="usd" />
+                      <label htmlFor="usd" className="flex items-center">
+                        <DollarSign className="mr-2 h-4 w-4" />
+                        USD
+                      </label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="btc" id="btc" />
+                      <label htmlFor="btc" className="flex items-center">
+                        <Bitcoin className="mr-2 h-4 w-4" />
+                        BTC
+                      </label>
+                    </div>
+                  </RadioGroup>
+                </div>
 
-                  <FormField
-                    control={form.control}
-                    name="amount"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Investment Amount</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-                              {form.watch("investmentType") === "usd" ? (
-                                <DollarSign className="h-4 w-4 text-muted-foreground" />
-                              ) : (
-                                <Bitcoin className="h-4 w-4 text-muted-foreground" />
-                              )}
-                            </div>
-                            <Input
-                              placeholder={form.watch("investmentType") === "usd" ? "10000" : "0.25"}
-                              {...field}
-                              className="pl-10"
-                            />
-                          </div>
-                        </FormControl>
-                        <FormDescription>
-                          {form.watch("investmentType") === "usd"
-                            ? "Minimum investment: $1,000"
-                            : "Minimum investment: 0.01 BTC"}
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Investment Amount</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                      {investmentType === "usd" ? (
+                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                      ) : (
+                        <Bitcoin className="h-4 w-4 text-muted-foreground" />
+                      )}
+                    </div>
+                    <Input
+                      placeholder={investmentType === "usd" ? "10000" : "0.25"}
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {investmentType === "usd" ? "Minimum investment: $1,000" : "Minimum investment: 0.01 BTC"}
+                  </p>
+                </div>
 
-                  <FormField
-                    control={form.control}
-                    name="strategy"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Investment Strategy</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a strategy" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="conservative">Conservative (Low Risk)</SelectItem>
-                            <SelectItem value="balanced">Balanced (Medium Risk)</SelectItem>
-                            <SelectItem value="aggressive">Aggressive (High Risk)</SelectItem>
-                            <SelectItem value="quantum">Quantum AI (Dynamic)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormDescription>Each strategy has a different risk-reward profile</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Investment Strategy</label>
+                  <Select value={strategy} onValueChange={setStrategy}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a strategy" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="conservative">Conservative (Low Risk)</SelectItem>
+                      <SelectItem value="balanced">Balanced (Medium Risk)</SelectItem>
+                      <SelectItem value="aggressive">Aggressive (High Risk)</SelectItem>
+                      <SelectItem value="quantum">Quantum AI (Dynamic)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-sm text-muted-foreground">Each strategy has a different risk-reward profile</p>
+                </div>
 
-                  <FormField
-                    control={form.control}
-                    name="riskLevel"
-                    render={({ field }) => (
-                      <FormItem className="space-y-3">
-                        <FormLabel>Risk Tolerance</FormLabel>
-                        <FormControl>
-                          <div className="space-y-3">
-                            <Slider
-                              value={riskLevel}
-                              max={100}
-                              step={1}
-                              onValueChange={(value) => {
-                                setRiskLevel(value)
-                                field.onChange(value[0])
-                              }}
-                              className="py-4"
-                            />
-                            <div className="flex justify-between text-xs text-muted-foreground">
-                              <span>Low Risk</span>
-                              <span>Medium Risk</span>
-                              <span>High Risk</span>
-                            </div>
-                          </div>
-                        </FormControl>
-                        <FormDescription>Current risk level: {riskLevel}%</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div className="space-y-3">
+                  <label className="text-sm font-medium">Risk Tolerance</label>
+                  <div className="space-y-3">
+                    <Slider value={riskLevel} max={100} step={1} onValueChange={setRiskLevel} className="py-4" />
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Low Risk</span>
+                      <span>Medium Risk</span>
+                      <span>High Risk</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Current risk level: {riskLevel}%</p>
+                </div>
 
-                  <FormField
-                    control={form.control}
-                    name="duration"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Investment Duration</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a duration" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="flexible">Flexible (No Lock-up)</SelectItem>
-                            <SelectItem value="3months">3 Months</SelectItem>
-                            <SelectItem value="6months">6 Months</SelectItem>
-                            <SelectItem value="1year">1 Year</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormDescription>Longer durations may offer better returns</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Investment Duration</label>
+                  <Select value={duration} onValueChange={setDuration}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a duration" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="flexible">Flexible (No Lock-up)</SelectItem>
+                      <SelectItem value="3months">3 Months</SelectItem>
+                      <SelectItem value="6months">6 Months</SelectItem>
+                      <SelectItem value="1year">1 Year</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-sm text-muted-foreground">Longer durations may offer better returns</p>
+                </div>
 
-                  <Button type="submit" className="w-full">
-                    Review Investment
-                  </Button>
-                </form>
-              </Form>
+                <Button type="submit" className="w-full">
+                  Review Investment
+                </Button>
+              </form>
             </CardContent>
           </Card>
         </div>
@@ -305,7 +181,7 @@ export function InvestmentForm() {
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Investment Type</p>
                     <p className="text-lg font-semibold">
-                      {formValues?.investmentType === "usd" ? (
+                      {investmentType === "usd" ? (
                         <span className="flex items-center">
                           <DollarSign className="mr-1 h-4 w-4" /> USD
                         </span>
@@ -319,22 +195,22 @@ export function InvestmentForm() {
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Amount</p>
                     <p className="text-lg font-semibold">
-                      {formValues?.investmentType === "usd" ? "$" : ""}
-                      {formValues?.amount} {formValues?.investmentType === "btc" ? "BTC" : ""}
+                      {investmentType === "usd" ? "$" : ""}
+                      {amount} {investmentType === "btc" ? "BTC" : ""}
                     </p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Strategy</p>
-                    <p className="text-lg font-semibold capitalize">{formValues?.strategy}</p>
+                    <p className="text-lg font-semibold capitalize">{strategy}</p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Duration</p>
                     <p className="text-lg font-semibold capitalize">
-                      {formValues?.duration === "flexible"
+                      {duration === "flexible"
                         ? "Flexible"
-                        : formValues?.duration === "3months"
+                        : duration === "3months"
                           ? "3 Months"
-                          : formValues?.duration === "6months"
+                          : duration === "6months"
                             ? "6 Months"
                             : "1 Year"}
                     </p>
@@ -346,30 +222,17 @@ export function InvestmentForm() {
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Estimated Annual Return</p>
                     <p className="text-lg font-semibold text-emerald-500">
-                      {formValues?.strategy === "conservative"
+                      {strategy === "conservative"
                         ? "5-8%"
-                        : formValues?.strategy === "balanced"
+                        : strategy === "balanced"
                           ? "8-15%"
-                          : formValues?.strategy === "aggressive"
+                          : strategy === "aggressive"
                             ? "15-25%"
                             : "12-30%"}
                     </p>
                   </div>
                 </div>
               </div>
-
-              {emailStatus && (
-                <Alert variant={emailStatus.success ? "default" : "destructive"}>
-                  {emailStatus.success ? <Check className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
-                  <AlertTitle>{emailStatus.success ? "Confirmation Email" : "Email Notification Issue"}</AlertTitle>
-                  <AlertDescription>
-                    {emailStatus.success
-                      ? "A confirmation email will be sent to your registered email address."
-                      : emailStatus.message ||
-                        "There was an issue sending the confirmation email. Your investment was processed successfully, but you may not receive an email confirmation."}
-                  </AlertDescription>
-                </Alert>
-              )}
 
               <div className="rounded-lg border p-4">
                 <div className="flex items-start gap-2">
@@ -390,10 +253,7 @@ export function InvestmentForm() {
                 Back
               </Button>
               <Link href="/checkout" passHref>
-                <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  Proceed to Payment
-                </Button>
+                <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">Proceed to Payment</Button>
               </Link>
               <Button onClick={confirmInvestment} disabled={isLoading}>
                 {isLoading ? "Processing..." : "Confirm Investment"}

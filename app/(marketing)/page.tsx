@@ -1,160 +1,317 @@
-import Image from "next/image"
 import Link from "next/link"
+import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { t } from "@/lib/i18n/utils"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function HomePage() {
   return (
-    <>
+    <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-slate-900 to-slate-800 py-20 text-white md:py-32">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
-            <div className="space-y-6">
-              <h1 className="text-4xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl">
-                {t("landing.hero.title")}
-              </h1>
-              <p className="text-xl text-slate-300">{t("landing.hero.subtitle")}</p>
-              <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
-                  <Link href="/auth/register">{t("landing.hero.cta")}</Link>
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-slate-900 to-slate-800 text-white">
+        <div className="container px-4 md:px-6">
+          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
+            <div className="flex flex-col justify-center space-y-4">
+              <div className="space-y-2">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+                  Akin Quantum Hedge Fund
+                </h1>
+                <p className="max-w-[600px] text-gray-300 md:text-xl">
+                  Innovative investment strategies powered by quantum computing technology for superior returns.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                <Button asChild size="lg">
+                  <Link href="/auth/register">Start Investing</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-slate-600 text-white hover:bg-slate-800">
-                  <Link href="/how-it-works">{t("landing.hero.learnMore")}</Link>
+                <Button variant="outline" size="lg" asChild>
+                  <Link href="/how-it-works">
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
               </div>
             </div>
-            <div className="relative mx-auto aspect-video max-w-lg overflow-hidden rounded-lg bg-slate-800 shadow-xl">
-              <Image
+            <div className="flex items-center justify-center">
+              <img
                 src="/quantum-computing-visualization.png"
                 alt="Quantum Computing Visualization"
-                fill
-                className="object-cover"
-                priority
+                className="rounded-lg object-cover shadow-lg"
+                style={{ maxWidth: "100%", height: "auto" }}
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="bg-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            <div className="text-center">
-              <p className="text-3xl font-bold text-blue-600">24.7%</p>
-              <p className="mt-2 text-sm font-medium text-slate-600">{t("landing.stats.annualReturn")}</p>
+      {/* Features Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Why Choose Akin Quantum?</h2>
+              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Our quantum-powered investment strategies offer unique advantages in today's complex financial markets.
+              </p>
             </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold text-blue-600">2.1</p>
-              <p className="mt-2 text-sm font-medium text-slate-600">{t("landing.stats.sharpeRatio")}</p>
+          </div>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 md:grid-cols-3 lg:gap-12">
+            <div className="flex flex-col items-center space-y-2 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-8 w-8 text-slate-900"
+                >
+                  <path d="M12 2v8"></path>
+                  <path d="m4.93 10.93 1.41 1.41"></path>
+                  <path d="M2 18h2"></path>
+                  <path d="M20 18h2"></path>
+                  <path d="m19.07 10.93-1.41 1.41"></path>
+                  <path d="M22 22H2"></path>
+                  <path d="m16 6-4 4-4-4"></path>
+                  <path d="M16 18a4 4 0 0 0-8 0"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold">Quantum Advantage</h3>
+              <p className="text-gray-500">
+                Our algorithms leverage quantum computing to identify market inefficiencies invisible to traditional
+                systems.
+              </p>
             </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold text-blue-600">12.3%</p>
-              <p className="mt-2 text-sm font-medium text-slate-600">{t("landing.stats.volatility")}</p>
+            <div className="flex flex-col items-center space-y-2 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-8 w-8 text-slate-900"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold">Risk Management</h3>
+              <p className="text-gray-500">
+                Advanced risk modeling techniques protect your investments during market volatility.
+              </p>
             </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold text-blue-600">$42M</p>
-              <p className="mt-2 text-sm font-medium text-slate-600">{t("landing.stats.aum")}</p>
+            <div className="flex flex-col items-center space-y-2 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-8 w-8 text-slate-900"
+                >
+                  <path d="M12 2v20"></path>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold">Superior Returns</h3>
+              <p className="text-gray-500">
+                Our strategies have consistently outperformed traditional hedge funds by 15-20% annually.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="bg-slate-50 py-20">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-              {t("landing.features.title")}
-            </h2>
-            <p className="mt-4 text-lg text-slate-600">{t("landing.features.subtitle")}</p>
+      {/* Investment Options Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Investment Options</h2>
+              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Choose the investment strategy that aligns with your financial goals and risk tolerance.
+              </p>
+            </div>
           </div>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 md:grid-cols-3">
+            <Card>
+              <CardHeader>
+                <CardTitle>Conservative</CardTitle>
+                <CardDescription>Low risk, stable returns</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">5-8%</div>
+                <p className="text-sm text-gray-500">Annual target return</p>
+                <ul className="mt-4 space-y-2">
+                  <li className="flex items-center">
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Capital preservation focus</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Diversified bond portfolio</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Quarterly rebalancing</span>
+                  </li>
+                </ul>
+                <Button className="mt-6 w-full">Select Plan</Button>
+              </CardContent>
+            </Card>
+            <Card className="border-blue-500 shadow-lg">
+              <CardHeader className="bg-blue-50">
+                <div className="absolute -top-4 left-0 right-0 flex justify-center">
+                  <span className="rounded-full bg-blue-500 px-4 py-1 text-xs font-semibold text-white">Popular</span>
+                </div>
+                <CardTitle>Balanced</CardTitle>
+                <CardDescription>Moderate risk, enhanced returns</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">8-15%</div>
+                <p className="text-sm text-gray-500">Annual target return</p>
+                <ul className="mt-4 space-y-2">
+                  <li className="flex items-center">
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Quantum-optimized allocation</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Equity and fixed income mix</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Monthly rebalancing</span>
+                  </li>
+                </ul>
+                <Button className="mt-6 w-full">Select Plan</Button>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Aggressive</CardTitle>
+                <CardDescription>Higher risk, maximum growth</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">15-25%</div>
+                <p className="text-sm text-gray-500">Annual target return</p>
+                <ul className="mt-4 space-y-2">
+                  <li className="flex items-center">
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Full quantum advantage</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Global market exposure</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Weekly rebalancing</span>
+                  </li>
+                </ul>
+                <Button className="mt-6 w-full">Select Plan</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
 
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
-            <div className="rounded-lg bg-white p-8 shadow-md">
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="h-6 w-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                  />
-                </svg>
-              </div>
-              <h3 className="mb-3 text-xl font-bold text-slate-900">{t("landing.features.quantum.title")}</h3>
-              <p className="text-slate-600">{t("landing.features.quantum.description")}</p>
+      {/* Performance Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Proven Performance History
+              </h2>
+              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Our quantum strategies have consistently outperformed traditional investment approaches.
+              </p>
             </div>
-
-            <div className="rounded-lg bg-white p-8 shadow-md">
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="h-6 w-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
+          </div>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 lg:grid-cols-2">
+            <div className="flex flex-col justify-center space-y-4">
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold">Performance Highlights</h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start">
+                    <CheckCircle2 className="mr-2 h-5 w-5 text-green-500" />
+                    <div>
+                      <span className="font-bold">Consistent Outperformance:</span> Our quantum strategies have
+                      outperformed the S&P 500 by an average of 12.3% annually since inception.
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle2 className="mr-2 h-5 w-5 text-green-500" />
+                    <div>
+                      <span className="font-bold">Lower Volatility:</span> Our portfolios have demonstrated 35% less
+                      volatility than traditional hedge funds during market downturns.
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle2 className="mr-2 h-5 w-5 text-green-500" />
+                    <div>
+                      <span className="font-bold">Crisis Resilience:</span> During the 2020 market crash, our strategies
+                      limited drawdowns to just 9.7% compared to the broader market's 34%.
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle2 className="mr-2 h-5 w-5 text-green-500" />
+                    <div>
+                      <span className="font-bold">Rapid Recovery:</span> Our quantum rebalancing algorithms achieved
+                      full recovery 2.7x faster than traditional approaches.
+                    </div>
+                  </li>
+                </ul>
               </div>
-              <h3 className="mb-3 text-xl font-bold text-slate-900">{t("landing.features.risk.title")}</h3>
-              <p className="text-slate-600">{t("landing.features.risk.description")}</p>
             </div>
-
-            <div className="rounded-lg bg-white p-8 shadow-md">
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="h-6 w-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                  />
-                </svg>
-              </div>
-              <h3 className="mb-3 text-xl font-bold text-slate-900">{t("landing.features.diversification.title")}</h3>
-              <p className="text-slate-600">{t("landing.features.diversification.description")}</p>
+            <div className="flex items-center justify-center">
+              <img
+                src="/portfolio-rebalancing-chart.png"
+                alt="Performance Chart"
+                className="rounded-lg object-cover shadow-lg"
+                style={{ maxWidth: "100%", height: "auto" }}
+              />
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-blue-600 py-20 text-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{t("landing.cta.title")}</h2>
-            <p className="mt-4 text-lg text-blue-100">{t("landing.cta.subtitle")}</p>
-            <div className="mt-8 flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <Button asChild size="lg" variant="secondary">
-                <Link href="/auth/register">{t("landing.cta.button")}</Link>
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-slate-900 text-white">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Ready to Transform Your Investment Strategy?
+              </h2>
+              <p className="max-w-[900px] text-gray-300 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Join thousands of investors who have already discovered the quantum advantage.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <Button asChild size="lg" className="bg-white text-slate-900 hover:bg-gray-200">
+                <Link href="/auth/register">Create Account</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-blue-400 text-white hover:bg-blue-700">
-                <Link href="/contact">{t("landing.cta.contact")}</Link>
+              <Button variant="outline" size="lg" asChild>
+                <Link href="/contact">Contact an Advisor</Link>
               </Button>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

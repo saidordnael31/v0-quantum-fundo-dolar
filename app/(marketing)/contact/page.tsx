@@ -1,161 +1,244 @@
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Phone, MapPin } from "lucide-react"
-
-export const metadata = {
-  title: "Contato | Akin Quantum Hedge Fund Offshore",
-  description: "Entre em contato com a equipe do Akin Quantum Hedge Fund Offshore",
-}
+// Remover importação de t se existir
+// import { t } from "@/lib/i18n/utils"
 
 export default function ContactPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* Hero Section */}
-      <section className="bg-slate-50 py-20 dark:bg-slate-900">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-6 text-4xl font-bold md:text-5xl">Entre em Contato</h1>
-            <p className="mb-8 text-xl text-muted-foreground">
-              Nossa equipe está pronta para responder a todas as suas perguntas e ajudá-lo a começar sua jornada de
-              investimentos.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="container mx-auto px-4 py-12">
+      <div className="mb-12 text-center">
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Contact Us</h1>
+        <p className="mt-4 text-lg text-gray-500">
+          Get in touch with our team for any questions about Akin Quantum Hedge Fund
+        </p>
+      </div>
 
-      {/* Contact Form Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-12 md:grid-cols-2">
-            <div>
-              <h2 className="mb-6 text-3xl font-bold">Envie-nos uma mensagem</h2>
-              <p className="mb-8 text-muted-foreground">
-                Preencha o formulário abaixo e nossa equipe entrará em contato com você o mais breve possível.
-              </p>
-
-              <form className="space-y-6">
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium">
-                      Nome Completo
-                    </label>
-                    <Input id="name" placeholder="Seu nome completo" />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium">
-                      E-mail
-                    </label>
-                    <Input id="email" type="email" placeholder="seu.email@exemplo.com" />
-                  </div>
-                </div>
-
+      <div className="grid gap-8 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Send Us a Message</CardTitle>
+            <CardDescription>
+              Fill out the form below and our team will get back to you within 24 hours.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium">
-                    Assunto
+                  <label htmlFor="first-name" className="text-sm font-medium">
+                    First Name
                   </label>
-                  <Input id="subject" placeholder="Assunto da mensagem" />
+                  <Input id="first-name" placeholder="John" required />
                 </div>
-
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">
-                    Mensagem
+                  <label htmlFor="last-name" className="text-sm font-medium">
+                    Last Name
                   </label>
-                  <Textarea id="message" placeholder="Digite sua mensagem aqui..." rows={5} />
+                  <Input id="last-name" placeholder="Doe" required />
                 </div>
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium">
+                  Email
+                </label>
+                <Input id="email" type="email" placeholder="john.doe@example.com" required />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="phone" className="text-sm font-medium">
+                  Phone Number
+                </label>
+                <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="investor-type" className="text-sm font-medium">
+                  Investor Type
+                </label>
+                <select
+                  id="investor-type"
+                  className="w-full rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+                >
+                  <option value="">Select an option</option>
+                  <option value="individual">Individual Investor</option>
+                  <option value="family-office">Family Office</option>
+                  <option value="institutional">Institutional Investor</option>
+                  <option value="financial-advisor">Financial Advisor</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-sm font-medium">
+                  Message
+                </label>
+                <Textarea id="message" placeholder="Please provide details about your inquiry..." rows={5} required />
+              </div>
+              <div className="flex items-center space-x-2">
+                <input type="checkbox" id="privacy-policy" className="h-4 w-4 rounded border-gray-300" required />
+                <label htmlFor="privacy-policy" className="text-sm text-gray-600">
+                  I agree to the{" "}
+                  <a href="/privacy" className="text-blue-600 hover:underline">
+                    privacy policy
+                  </a>{" "}
+                  and consent to being contacted by Akin Quantum.
+                </label>
+              </div>
+              <Button type="submit" className="w-full">
+                Submit
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
 
-                <Button type="submit" size="lg" className="w-full">
-                  Enviar Mensagem
-                </Button>
-              </form>
-            </div>
+        <div className="space-y-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Contact Information</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h3 className="text-lg font-medium">Headquarters</h3>
+                <address className="not-italic text-gray-600">
+                  Akin Quantum Hedge Fund
+                  <br />
+                  One Financial Plaza, Suite 2000
+                  <br />
+                  New York, NY 10004
+                  <br />
+                  United States
+                </address>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium">Phone</h3>
+                <p className="text-gray-600">
+                  <a href="tel:+18005550123" className="hover:text-blue-600">
+                    +1 (800) 555-0123
+                  </a>
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium">Email</h3>
+                <p className="text-gray-600">
+                  <a href="mailto:info@akinquantum.com" className="hover:text-blue-600">
+                    info@akinquantum.com
+                  </a>
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium">Investor Relations</h3>
+                <p className="text-gray-600">
+                  <a href="mailto:invest@akinquantum.com" className="hover:text-blue-600">
+                    invest@akinquantum.com
+                  </a>
+                  <br />
+                  <a href="tel:+18005551234" className="hover:text-blue-600">
+                    +1 (800) 555-1234
+                  </a>
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
-            <div>
-              <h2 className="mb-6 text-3xl font-bold">Informações de Contato</h2>
-              <p className="mb-8 text-muted-foreground">
-                Você também pode entrar em contato conosco diretamente através dos canais abaixo.
+          <Card>
+            <CardHeader>
+              <CardTitle>Office Hours</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span>Monday - Friday</span>
+                  <span>9:00 AM - 6:00 PM ET</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Saturday</span>
+                  <span>Closed</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Sunday</span>
+                  <span>Closed</span>
+                </div>
+                <p className="mt-4 text-sm text-gray-600">
+                  Virtual meetings available outside regular business hours by appointment.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Schedule a Consultation</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-4 text-gray-600">
+                Interested in learning more about our investment strategies? Schedule a one-on-one consultation with one
+                of our investment advisors.
               </p>
-
-              <div className="space-y-6">
-                <Card>
-                  <CardContent className="flex items-start space-x-4 p-6">
-                    <Mail className="h-6 w-6 text-emerald-500" />
-                    <div>
-                      <h3 className="font-bold">E-mail</h3>
-                      <p className="text-muted-foreground">contato@akinquantum.com</p>
-                      <p className="text-muted-foreground">suporte@akinquantum.com</p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="flex items-start space-x-4 p-6">
-                    <Phone className="h-6 w-6 text-emerald-500" />
-                    <div>
-                      <h3 className="font-bold">Telefone</h3>
-                      <p className="text-muted-foreground">+55 11 3456-7890</p>
-                      <p className="text-muted-foreground">+55 11 9876-5432</p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="flex items-start space-x-4 p-6">
-                    <MapPin className="h-6 w-6 text-emerald-500" />
-                    <div>
-                      <h3 className="font-bold">Endereço</h3>
-                      <p className="text-muted-foreground">Av. Paulista, 1000, 15º andar</p>
-                      <p className="text-muted-foreground">Bela Vista, São Paulo - SP, 01310-100</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="mt-8">
-                <h3 className="mb-4 text-xl font-bold">Horário de Atendimento</h3>
-                <p className="text-muted-foreground">Segunda a Sexta: 9h às 18h</p>
-                <p className="text-muted-foreground">Sábado: 9h às 13h</p>
-                <p className="text-muted-foreground">Domingo e Feriados: Fechado</p>
-              </div>
-            </div>
-          </div>
+              <Button className="w-full">Book a Meeting</Button>
+            </CardContent>
+          </Card>
         </div>
-      </section>
+      </div>
 
-      {/* Map Section */}
-      <section className="py-16 bg-slate-50 dark:bg-slate-900">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center mb-12">
-            <h2 className="mb-4 text-3xl font-bold">Nossa Localização</h2>
-            <p className="text-lg text-muted-foreground">
-              Visite nosso escritório em São Paulo para uma consulta presencial.
-            </p>
-          </div>
-
-          <div className="aspect-video w-full max-w-5xl mx-auto rounded-lg overflow-hidden shadow-lg">
-            <div className="w-full h-full bg-muted flex items-center justify-center">
-              <p className="text-muted-foreground">Mapa da localização</p>
-            </div>
-          </div>
+      <div className="mt-16">
+        <h2 className="mb-8 text-center text-3xl font-bold">Global Presence</h2>
+        <div className="grid gap-6 md:grid-cols-3">
+          <Card>
+            <CardHeader>
+              <CardTitle>New York</CardTitle>
+              <CardDescription>Headquarters</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <address className="not-italic text-gray-600">
+                One Financial Plaza, Suite 2000
+                <br />
+                New York, NY 10004
+                <br />
+                United States
+                <br />
+                <a href="tel:+18005550123" className="hover:text-blue-600">
+                  +1 (800) 555-0123
+                </a>
+              </address>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>London</CardTitle>
+              <CardDescription>European Office</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <address className="not-italic text-gray-600">
+                30 St Mary Axe, 28th Floor
+                <br />
+                London, EC3A 8BF
+                <br />
+                United Kingdom
+                <br />
+                <a href="tel:+442071234567" className="hover:text-blue-600">
+                  +44 20 7123 4567
+                </a>
+              </address>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Singapore</CardTitle>
+              <CardDescription>Asia-Pacific Office</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <address className="not-italic text-gray-600">
+                Marina Bay Financial Centre, Tower 3
+                <br />
+                Singapore 018982
+                <br />
+                <a href="tel:+6565551234" className="hover:text-blue-600">
+                  +65 6555 1234
+                </a>
+              </address>
+            </CardContent>
+          </Card>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-emerald-500 py-16 text-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-4 text-3xl font-bold">Pronto para começar?</h2>
-            <p className="mb-8 text-lg">
-              Crie sua conta agora e comece sua jornada de investimentos com o Akin Quantum Hedge Fund Offshore.
-            </p>
-            <Button asChild size="lg" className="bg-white text-emerald-500 hover:bg-white/90">
-              <Link href="/auth/register">Criar Conta</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   )
 }

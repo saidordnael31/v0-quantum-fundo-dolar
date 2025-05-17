@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -27,7 +26,6 @@ const formSchema = z.object({
 })
 
 export function CheckoutForm() {
-  const t = useTranslations("payment")
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [paymentSuccess, setPaymentSuccess] = useState(false)
@@ -48,30 +46,11 @@ export function CheckoutForm() {
       // Simular um atraso de processamento
       await new Promise((resolve) => setTimeout(resolve, 1500))
 
-      // Enviar os dados para o servidor
-      const response = await fetch("/api/payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: Number.parseFloat(values.amount) * 100, // Stripe trabalha com centavos
-          email: values.email,
-          name: values.name,
-        }),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.message || "Payment failed")
-      }
-
-      // Pagamento bem-sucedido
+      // Simular sucesso de pagamento
       setPaymentSuccess(true)
       toast({
-        title: t("success"),
-        description: `Transaction ID: ${data.paymentId}`,
+        title: "Payment Successful",
+        description: `Transaction ID: MOCK_${Date.now()}`,
       })
 
       // Limpar o formulário
@@ -79,8 +58,8 @@ export function CheckoutForm() {
     } catch (error) {
       console.error("Payment error:", error)
       toast({
-        title: t("error"),
-        description: error instanceof Error ? error.message : "An unknown error occurred",
+        title: "Payment Error",
+        description: "An error occurred while processing your payment",
         variant: "destructive",
       })
     } finally {
@@ -93,7 +72,7 @@ export function CheckoutForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <Card>
           <CardHeader>
-            <CardTitle>{t("checkout")}</CardTitle>
+            <CardTitle>Checkout</CardTitle>
             <CardDescription>Complete your investment securely with our payment system</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -102,7 +81,7 @@ export function CheckoutForm() {
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("amount")} (USD)</FormLabel>
+                  <FormLabel>Amount (USD)</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2">$</span>
@@ -115,7 +94,7 @@ export function CheckoutForm() {
             />
 
             <div className="space-y-4">
-              <FormLabel>{t("paymentMethod")}</FormLabel>
+              <FormLabel>Payment Method</FormLabel>
               <Select defaultValue="card">
                 <SelectTrigger>
                   <SelectValue />
@@ -138,7 +117,7 @@ export function CheckoutForm() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("cardholderName")}</FormLabel>
+                    <FormLabel>Cardholder Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -162,11 +141,11 @@ export function CheckoutForm() {
               />
 
               <div className="space-y-2">
-                <FormLabel>{t("cardDetails")}</FormLabel>
+                <FormLabel>Card Details</FormLabel>
                 <div className="rounded-md border border-input p-3">
                   <div className="p-2 text-sm text-gray-500">
-                    <p>Modo de simulação ativo - Stripe não está configurado</p>
-                    <p className="mt-1">Qualquer informação será aceita para testes</p>
+                    <p>Demo mode active - No actual payment processing</p>
+                    <p className="mt-1">Any information will be accepted for testing</p>
                   </div>
                 </div>
               </div>
@@ -177,17 +156,17 @@ export function CheckoutForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t("processingPayment")}
+                  Processing Payment
                 </>
               ) : paymentSuccess ? (
                 <>
                   <Check className="mr-2 h-4 w-4" />
-                  {t("success")}
+                  Payment Successful
                 </>
               ) : (
                 <>
                   <CreditCard className="mr-2 h-4 w-4" />
-                  {t("pay")}
+                  Pay Now
                 </>
               )}
             </Button>
