@@ -5,7 +5,6 @@ export interface User {
   role: "admin" | "user"
   status: "active" | "inactive" | "pending"
   createdAt: string
-  updatedAt?: string
   profileImage?: string
   totalInvested?: number
 }
@@ -18,7 +17,6 @@ export interface Transaction {
   currency: "USD" | "BTC"
   status: "completed" | "pending" | "failed" | "cancelled"
   createdAt: string
-  updatedAt?: string
   description?: string
   paymentMethod?: string
   reference?: string
@@ -33,8 +31,8 @@ export interface Investment {
   status: "active" | "closed" | "pending"
   startDate: string
   endDate?: string
-  duration: number // em meses
-  riskLevel: number // 1-5
+  duration: number
+  riskLevel: number
   currentValue: number
   profit: number
   profitPercentage: number
@@ -47,12 +45,6 @@ export interface AdminDashboardStats {
   totalInvestments: number
   revenueThisMonth: number
   pendingTransactions: number
-  userGrowth: {
-    period: string
-    count: number
-  }[]
-  transactionVolume: {
-    period: string
-    amount: number
-  }[]
+  userGrowth: { period: string; count: number }[]
+  transactionVolume: { period: string; amount: number }[]
 }

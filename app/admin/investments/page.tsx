@@ -138,12 +138,21 @@ export default function AdminInvestmentsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Investments</h1>
-          <p className="text-muted-foreground">Manage all investment strategies and allocations</p>
+      <h1 className="mb-6 text-3xl font-bold">Investments</h1>
+
+      <div className="mb-6 flex justify-between">
+        <div className="relative w-64">
+          <Input
+            type="text"
+            placeholder="Search investments..."
+            className="w-full rounded-md border border-gray-300 px-4 py-2 pl-10 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
         </div>
-        <Button>
+
+        <Button className="rounded-md bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-700">
           <Plus className="mr-2 h-4 w-4" />
           Add Investment
         </Button>
@@ -157,40 +166,29 @@ export default function AdminInvestmentsPage() {
         <CardContent>
           <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-1 items-center gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="Search investments..."
-                  className="pl-10"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-[150px]">
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="closed">Closed</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={strategyFilter} onValueChange={setStrategyFilter}>
-                  <SelectTrigger className="w-[150px]">
-                    <SelectValue placeholder="Strategy" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Strategies</SelectItem>
-                    <SelectItem value="conservative">Conservative</SelectItem>
-                    <SelectItem value="balanced">Balanced</SelectItem>
-                    <SelectItem value="aggressive">Aggressive</SelectItem>
-                    <SelectItem value="quantum">Quantum AI</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="closed">Closed</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={strategyFilter} onValueChange={setStrategyFilter}>
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Strategy" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Strategies</SelectItem>
+                  <SelectItem value="conservative">Conservative</SelectItem>
+                  <SelectItem value="balanced">Balanced</SelectItem>
+                  <SelectItem value="aggressive">Aggressive</SelectItem>
+                  <SelectItem value="quantum">Quantum AI</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <Button variant="outline" size="icon">
               <Download className="h-4 w-4" />
@@ -202,7 +200,7 @@ export default function AdminInvestmentsPage() {
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
             </div>
           ) : (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-lg bg-white shadow">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -219,7 +217,9 @@ export default function AdminInvestmentsPage() {
                 <TableBody>
                   {filteredInvestments.map((investment) => (
                     <TableRow key={investment.id}>
-                      <TableCell className="font-medium">{investment.id}</TableCell>
+                      <TableCell className="font-medium">
+                        <span className="font-mono text-xs">{investment.id}</span>
+                      </TableCell>
                       <TableCell>{investment.userId}</TableCell>
                       <TableCell>{getStrategyBadge(investment.strategy)}</TableCell>
                       <TableCell>
