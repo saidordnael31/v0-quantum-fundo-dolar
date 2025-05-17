@@ -17,7 +17,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
 
 interface AdminUserDialogProps {
   open: boolean
@@ -27,7 +26,6 @@ interface AdminUserDialogProps {
 }
 
 export function AdminUserDialog({ open, onOpenChange, user, onSave }: AdminUserDialogProps) {
-  const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<Partial<User>>(
     user || {
@@ -82,19 +80,14 @@ export function AdminUserDialog({ open, onOpenChange, user, onSave }: AdminUserD
 
       data = await response.json()
 
-      toast({
-        title: user ? "User updated" : "User created",
-        description: user ? "User has been updated successfully" : "User has been created successfully",
-      })
+      // Notificar o usuário (em um sistema real, usaríamos um toast)
+      console.log(user ? "User updated" : "User created")
 
       onSave(data)
     } catch (error) {
       console.error("Error saving user:", error)
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "An unknown error occurred",
-        variant: "destructive",
-      })
+      // Notificar o usuário do erro (em um sistema real, usaríamos um toast)
+      console.error(error instanceof Error ? error.message : "An unknown error occurred")
     } finally {
       setIsLoading(false)
     }

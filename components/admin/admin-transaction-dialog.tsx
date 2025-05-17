@@ -17,7 +17,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
 
 interface AdminTransactionDialogProps {
   open: boolean
@@ -27,7 +26,6 @@ interface AdminTransactionDialogProps {
 }
 
 export function AdminTransactionDialog({ open, onOpenChange, transaction, onSave }: AdminTransactionDialogProps) {
-  const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [users, setUsers] = useState<User[]>([])
   const [formData, setFormData] = useState<Partial<Transaction>>(
@@ -101,21 +99,14 @@ export function AdminTransactionDialog({ open, onOpenChange, transaction, onSave
 
       data = await response.json()
 
-      toast({
-        title: transaction ? "Transaction updated" : "Transaction created",
-        description: transaction
-          ? "Transaction has been updated successfully"
-          : "Transaction has been created successfully",
-      })
+      // Notificar o usuário (em um sistema real, usaríamos um toast)
+      console.log(transaction ? "Transaction updated" : "Transaction created")
 
       onSave(data)
     } catch (error) {
       console.error("Error saving transaction:", error)
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "An unknown error occurred",
-        variant: "destructive",
-      })
+      // Notificar o usuário do erro (em um sistema real, usaríamos um toast)
+      console.error(error instanceof Error ? error.message : "An unknown error occurred")
     } finally {
       setIsLoading(false)
     }

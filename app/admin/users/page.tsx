@@ -134,12 +134,6 @@ export default function AdminUsersPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Add User</CardTitle>
-        </CardHeader>
-      </Card>
-
-      <Card>
-        <CardHeader>
           <CardTitle>User Management</CardTitle>
           <CardDescription>View and manage all users in the system</CardDescription>
         </CardHeader>

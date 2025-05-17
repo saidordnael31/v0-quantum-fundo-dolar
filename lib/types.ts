@@ -1,31 +1,30 @@
-// Tipos para o backend
-
-export type User = {
+export interface User {
   id: string
   name: string
   email: string
-  role: "user" | "admin"
-  createdAt: string
+  role: "admin" | "user"
   status: "active" | "inactive" | "pending"
-  totalInvested?: number
+  createdAt: string
+  updatedAt?: string
   profileImage?: string
+  totalInvested?: number
 }
 
-export type Transaction = {
+export interface Transaction {
   id: string
   userId: string
   type: "deposit" | "withdrawal" | "investment" | "profit" | "fee"
   amount: number
   currency: "USD" | "BTC"
-  status: "pending" | "completed" | "failed" | "cancelled"
+  status: "completed" | "pending" | "failed" | "cancelled"
   createdAt: string
-  updatedAt: string
+  updatedAt?: string
   description?: string
   paymentMethod?: string
   reference?: string
 }
 
-export type Investment = {
+export interface Investment {
   id: string
   userId: string
   strategy: "conservative" | "balanced" | "aggressive" | "quantum"
@@ -34,20 +33,26 @@ export type Investment = {
   status: "active" | "closed" | "pending"
   startDate: string
   endDate?: string
-  duration: "flexible" | "3months" | "6months" | "1year"
-  riskLevel: number
+  duration: number // em meses
+  riskLevel: number // 1-5
   currentValue: number
   profit: number
   profitPercentage: number
 }
 
-export type AdminDashboardStats = {
+export interface AdminDashboardStats {
   totalUsers: number
   activeUsers: number
-  totalInvestments: number
-  totalDeposits: number
-  totalWithdrawals: number
   assetsUnderManagement: number
+  totalInvestments: number
   revenueThisMonth: number
   pendingTransactions: number
+  userGrowth: {
+    period: string
+    count: number
+  }[]
+  transactionVolume: {
+    period: string
+    amount: number
+  }[]
 }
