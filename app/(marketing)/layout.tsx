@@ -4,6 +4,7 @@ import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Logo } from "@/components/logo"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -18,24 +19,25 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
               Home
             </Link>
             <Link href="/about" className="text-sm font-medium hover:text-primary">
-              Sobre Nós
+              About Us
             </Link>
             <Link href="/how-it-works" className="text-sm font-medium hover:text-primary">
-              Como Funciona
+              How It Works
             </Link>
             <Link href="/faq" className="text-sm font-medium hover:text-primary">
               FAQ
             </Link>
             <Link href="/contact" className="text-sm font-medium hover:text-primary">
-              Contato
+              Contact
             </Link>
           </nav>
-          <div className="hidden gap-4 md:flex">
+          <div className="hidden gap-4 md:flex items-center">
+            <LanguageSwitcher />
             <Button asChild variant="ghost">
-              <Link href="/auth/login">Entrar</Link>
+              <Link href="/auth/login">Login</Link>
             </Button>
             <Button asChild>
-              <Link href="/auth/register">Criar Conta</Link>
+              <Link href="/auth/register">Register</Link>
             </Button>
           </div>
           <Sheet>
@@ -51,23 +53,26 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
                   Home
                 </Link>
                 <Link href="/about" className="text-sm font-medium hover:text-primary">
-                  Sobre Nós
+                  About Us
                 </Link>
                 <Link href="/how-it-works" className="text-sm font-medium hover:text-primary">
-                  Como Funciona
+                  How It Works
                 </Link>
                 <Link href="/faq" className="text-sm font-medium hover:text-primary">
                   FAQ
                 </Link>
                 <Link href="/contact" className="text-sm font-medium hover:text-primary">
-                  Contato
+                  Contact
                 </Link>
-                <div className="flex flex-col gap-2 pt-4">
+                <div className="flex items-center gap-2 pt-4">
+                  <LanguageSwitcher />
+                </div>
+                <div className="flex flex-col gap-2 pt-2">
                   <Button asChild variant="outline">
-                    <Link href="/auth/login">Entrar</Link>
+                    <Link href="/auth/login">Login</Link>
                   </Button>
                   <Button asChild>
-                    <Link href="/auth/register">Criar Conta</Link>
+                    <Link href="/auth/register">Register</Link>
                   </Button>
                 </div>
               </div>
@@ -81,7 +86,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div>
               <h3 className="mb-4 text-lg font-bold text-white">Akin Quantum</h3>
-              <p className="mb-4">Inovação em investimentos com tecnologia quântica.</p>
+              <p className="mb-4">Innovation in investments with quantum technology.</p>
               <div className="flex space-x-4">
                 <a href="#" className="hover:text-white">
                   <span className="sr-only">Twitter</span>
@@ -98,7 +103,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
               </div>
             </div>
             <div>
-              <h3 className="mb-4 text-lg font-bold text-white">Navegação</h3>
+              <h3 className="mb-4 text-lg font-bold text-white">Navigation</h3>
               <ul className="space-y-2">
                 <li>
                   <Link href="/" className="hover:text-white">
@@ -107,17 +112,17 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
                 </li>
                 <li>
                   <Link href="/about" className="hover:text-white">
-                    Sobre Nós
+                    About Us
                   </Link>
                 </li>
                 <li>
                   <Link href="/how-it-works" className="hover:text-white">
-                    Como Funciona
+                    How It Works
                   </Link>
                 </li>
                 <li>
                   <Link href="/faq" className="hover:text-white">
-                    Perguntas Frequentes
+                    FAQ
                   </Link>
                 </li>
               </ul>
@@ -127,32 +132,32 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
               <ul className="space-y-2">
                 <li>
                   <Link href="/terms" className="hover:text-white">
-                    Termos de Serviço
+                    Terms of Service
                   </Link>
                 </li>
                 <li>
                   <Link href="/privacy" className="hover:text-white">
-                    Política de Privacidade
+                    Privacy Policy
                   </Link>
                 </li>
                 <li>
                   <Link href="/disclaimer" className="hover:text-white">
-                    Aviso de Risco
+                    Risk Disclaimer
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="mb-4 text-lg font-bold text-white">Contato</h3>
+              <h3 className="mb-4 text-lg font-bold text-white">Contact</h3>
               <ul className="space-y-2">
-                <li>contato@akinquantum.com</li>
+                <li>contact@akinquantum.com</li>
                 <li>+55 11 3456-7890</li>
                 <li>Av. Paulista, 1000, São Paulo - SP</li>
               </ul>
             </div>
           </div>
           <div className="mt-8 border-t border-slate-800 pt-8 text-center">
-            <p>&copy; {new Date().getFullYear()} Akin Quantum Hedge Fund Offshore. Todos os direitos reservados.</p>
+            <p>&copy; {new Date().getFullYear()} Akin Quantum Hedge Fund Offshore. All rights reserved.</p>
           </div>
         </div>
       </footer>

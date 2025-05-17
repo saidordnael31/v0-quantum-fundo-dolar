@@ -5,8 +5,6 @@ import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { CardElement, Elements, useStripe, useElements } from "@stripe/react-stripe-js"
-import { loadStripe } from "@stripe/stripe-js"
 import { Check, CreditCard, Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -15,10 +13,6 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
-
-// Carregue o Stripe fora do componente para evitar recriações
-// Substitua com sua chave pública do Stripe
-const stripePromise = loadStripe("pk_test_your_stripe_public_key")
 
 const formSchema = z.object({
   amount: z.string().min(1, {
@@ -32,10 +26,8 @@ const formSchema = z.object({
   }),
 })
 
-function CheckoutFormContent() {
+export function CheckoutForm() {
   const t = useTranslations("payment")
-  const stripe = useStripe()
-  const elements = useElements()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [paymentSuccess, setPaymentSuccess] = useState(false)
@@ -50,27 +42,13 @@ function CheckoutFormContent() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!stripe || !elements) {
-      return
-    }
-
     setIsLoading(true)
 
     try {
-      // Criar um token de pagamento
-      const cardElement = elements.getElement(CardElement)
+      // Simular um atraso de processamento
+      await new Promise((resolve) => setTimeout(resolve, 1500))
 
-      if (!cardElement) {
-        throw new Error("Card element not found")
-      }
-
-      const { token, error } = await stripe.createToken(cardElement)
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
-      // Enviar o token para o servidor
+      // Enviar os dados para o servidor
       const response = await fetch("/api/payment", {
         method: "POST",
         headers: {
@@ -78,7 +56,6 @@ function CheckoutFormContent() {
         },
         body: JSON.stringify({
           amount: Number.parseFloat(values.amount) * 100, // Stripe trabalha com centavos
-          token: token.id,
           email: values.email,
           name: values.name,
         }),
@@ -99,7 +76,6 @@ function CheckoutFormContent() {
 
       // Limpar o formulário
       form.reset()
-      cardElement.clear()
     } catch (error) {
       console.error("Payment error:", error)
       toast({
@@ -188,28 +164,16 @@ function CheckoutFormContent() {
               <div className="space-y-2">
                 <FormLabel>{t("cardDetails")}</FormLabel>
                 <div className="rounded-md border border-input p-3">
-                  <CardElement
-                    options={{
-                      style: {
-                        base: {
-                          fontSize: "16px",
-                          color: "#424770",
-                          "::placeholder": {
-                            color: "#aab7c4",
-                          },
-                        },
-                        invalid: {
-                          color: "#9e2146",
-                        },
-                      },
-                    }}
-                  />
+                  <div className="p-2 text-sm text-gray-500">
+                    <p>Modo de simulação ativo - Stripe não está configurado</p>
+                    <p className="mt-1">Qualquer informação será aceita para testes</p>
+                  </div>
                 </div>
               </div>
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full" disabled={isLoading || paymentSuccess || !stripe}>
+            <Button type="submit" className="w-full" disabled={isLoading || paymentSuccess}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -231,13 +195,5 @@ function CheckoutFormContent() {
         </Card>
       </form>
     </Form>
-  )
-}
-
-export function CheckoutForm() {
-  return (
-    <Elements stripe={stripePromise}>
-      <CheckoutFormContent />
-    </Elements>
   )
 }

@@ -1,22 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
-  },
+  // Desativar completamente a geração estática
+  output: 'standalone',
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  // Desativar a otimização de imagens para simplificar
   images: {
     unoptimized: true,
   },
+  // Desativar a pré-renderização estática para todas as páginas
   experimental: {
-    serverComponentsExternalPackages: ['next-intl'],
+    missingSuspenseWithCSRBailout: false,
   },
 }
 
