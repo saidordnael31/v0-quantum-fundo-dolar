@@ -1,11 +1,11 @@
-import type { Metadata } from "next"
 import { DashboardOverview } from "@/components/dashboard-overview"
 
-export const metadata: Metadata = {
-  title: "Dashboard | Quantum Investment Platform",
-  description: "Manage your investments and track your portfolio",
-}
-
 export default function DashboardPage() {
-  return <DashboardOverview />
+  return (
+    <div className="flex min-h-screen w-full flex-col bg-slate-50 dark:bg-slate-950">
+      <main className="flex-1 p-4 md:p-6">
+        <DashboardOverview />
+      </main>
+    </div>
+  )
 }
