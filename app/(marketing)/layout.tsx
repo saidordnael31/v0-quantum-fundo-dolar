@@ -4,7 +4,7 @@ import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Logo } from "@/components/logo"
-import { LanguageSwitcher } from "@/components/language-switcher"
+// Removida a importação do LanguageSwitcher
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -32,7 +32,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             </Link>
           </nav>
           <div className="hidden gap-4 md:flex items-center">
-            <LanguageSwitcher />
+            {/* Removido o componente LanguageSwitcher */}
             <Button asChild variant="ghost">
               <Link href="/auth/login">Login</Link>
             </Button>
@@ -64,9 +64,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
                 <Link href="/contact" className="text-sm font-medium hover:text-primary">
                   Contact
                 </Link>
-                <div className="flex items-center gap-2 pt-4">
-                  <LanguageSwitcher />
-                </div>
+                <div className="flex items-center gap-2 pt-4">{/* Removido o componente LanguageSwitcher */}</div>
                 <div className="flex flex-col gap-2 pt-2">
                   <Button asChild variant="outline">
                     <Link href="/auth/login">Login</Link>

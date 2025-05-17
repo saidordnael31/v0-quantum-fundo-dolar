@@ -1,0 +1,5 @@
+# Ignorar arquivos desnecessários na implantação
+node_modules
+.pnpm-store
+.next
+scripts
