@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import type { Investment } from "@/lib/types"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
   DropdownMenu,
@@ -16,7 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search, Plus, MoreHorizontal, Download, TrendingUp } from "lucide-react"
+import { MoreHorizontal, Download, TrendingUp } from "lucide-react"
 
 export default function AdminInvestmentsPage() {
   const [investments, setInvestments] = useState<Investment[]>([])
@@ -138,137 +137,124 @@ export default function AdminInvestmentsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="mb-6 text-3xl font-bold">Investments</h1>
+      <h1 className="text-3xl font-bold">Investments</h1>
+      <p className="text-gray-500">Manage investment strategies.</p>
 
-      <div className="mb-6 flex justify-between">
-        <div className="relative w-64">
-          <Input
-            type="text"
-            placeholder="Search investments..."
-            className="w-full rounded-md border border-gray-300 px-4 py-2 pl-10 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-        </div>
-
-        <Button className="rounded-md bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-700">
-          <Plus className="mr-2 h-4 w-4" />
-          Add Investment
-        </Button>
-      </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Investment Management</CardTitle>
-          <CardDescription>View and manage all investments in the system</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex flex-1 items-center gap-2">
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="closed">Closed</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select value={strategyFilter} onValueChange={setStrategyFilter}>
-                <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder="Strategy" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Strategies</SelectItem>
-                  <SelectItem value="conservative">Conservative</SelectItem>
-                  <SelectItem value="balanced">Balanced</SelectItem>
-                  <SelectItem value="aggressive">Aggressive</SelectItem>
-                  <SelectItem value="quantum">Quantum AI</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <Button variant="outline" size="icon">
-              <Download className="h-4 w-4" />
-            </Button>
+      <div className="rounded-lg bg-white p-6 shadow">
+        {isLoading ? (
+          <div className="flex h-64 items-center justify-center">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
           </div>
+        ) : filteredInvestments.length > 0 ? (
+          <Card>
+            <CardHeader>
+              <CardTitle>Investment Management</CardTitle>
+              <CardDescription>View and manage all investments in the system</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-1 items-center gap-2">
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="w-[150px]">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Status</SelectItem>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="closed">Closed</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={strategyFilter} onValueChange={setStrategyFilter}>
+                    <SelectTrigger className="w-[150px]">
+                      <SelectValue placeholder="Strategy" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Strategies</SelectItem>
+                      <SelectItem value="conservative">Conservative</SelectItem>
+                      <SelectItem value="balanced">Balanced</SelectItem>
+                      <SelectItem value="aggressive">Aggressive</SelectItem>
+                      <SelectItem value="quantum">Quantum AI</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button variant="outline" size="icon">
+                  <Download className="h-4 w-4" />
+                </Button>
+              </div>
 
-          {isLoading ? (
-            <div className="flex h-64 items-center justify-center">
-              <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
-            </div>
-          ) : (
-            <div className="overflow-x-auto rounded-lg bg-white shadow">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>ID</TableHead>
-                    <TableHead>User</TableHead>
-                    <TableHead>Strategy</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Current Value</TableHead>
-                    <TableHead>Profit</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredInvestments.map((investment) => (
-                    <TableRow key={investment.id}>
-                      <TableCell className="font-medium">
-                        <span className="font-mono text-xs">{investment.id}</span>
-                      </TableCell>
-                      <TableCell>{investment.userId}</TableCell>
-                      <TableCell>{getStrategyBadge(investment.strategy)}</TableCell>
-                      <TableCell>
-                        {investment.currency === "USD" ? "$" : ""}
-                        {investment.amount.toLocaleString()}
-                        {investment.currency === "BTC" ? " BTC" : ""}
-                      </TableCell>
-                      <TableCell>
-                        {investment.currency === "USD" ? "$" : ""}
-                        {investment.currentValue.toLocaleString()}
-                        {investment.currency === "BTC" ? " BTC" : ""}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center">
-                          <TrendingUp className="mr-1 h-4 w-4 text-emerald-500" />
-                          <span className="text-emerald-500">
-                            {investment.profitPercentage}% ({investment.currency === "USD" ? "$" : ""}
-                            {investment.profit.toLocaleString()}
-                            {investment.currency === "BTC" ? " BTC" : ""})
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>{getStatusBadge(investment.status)}</TableCell>
-                      <TableCell className="text-right">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <MoreHorizontal className="h-4 w-4" />
-                              <span className="sr-only">Actions</span>
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                            <DropdownMenuItem>View Details</DropdownMenuItem>
-                            <DropdownMenuItem>Update Value</DropdownMenuItem>
-                            {investment.status === "active" && <DropdownMenuItem>Close Investment</DropdownMenuItem>}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
+              <div className="overflow-x-auto rounded-lg bg-white shadow">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>ID</TableHead>
+                      <TableHead>User</TableHead>
+                      <TableHead>Strategy</TableHead>
+                      <TableHead>Amount</TableHead>
+                      <TableHead>Current Value</TableHead>
+                      <TableHead>Profit</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredInvestments.map((investment) => (
+                      <TableRow key={investment.id}>
+                        <TableCell className="font-medium">
+                          <span className="font-mono text-xs">{investment.id}</span>
+                        </TableCell>
+                        <TableCell>{investment.userId}</TableCell>
+                        <TableCell>{getStrategyBadge(investment.strategy)}</TableCell>
+                        <TableCell>
+                          {investment.currency === "USD" ? "$" : ""}
+                          {investment.amount.toLocaleString()}
+                          {investment.currency === "BTC" ? " BTC" : ""}
+                        </TableCell>
+                        <TableCell>
+                          {investment.currency === "USD" ? "$" : ""}
+                          {investment.currentValue.toLocaleString()}
+                          {investment.currency === "BTC" ? " BTC" : ""}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center">
+                            <TrendingUp className="mr-1 h-4 w-4 text-emerald-500" />
+                            <span className="text-emerald-500">
+                              {investment.profitPercentage}% ({investment.currency === "USD" ? "$" : ""}
+                              {investment.profit.toLocaleString()}
+                              {investment.currency === "BTC" ? " BTC" : ""})
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell>{getStatusBadge(investment.status)}</TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                                <span className="sr-only">Actions</span>
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem>Edit</DropdownMenuItem>
+                              <DropdownMenuItem>View Details</DropdownMenuItem>
+                              <DropdownMenuItem>Update Value</DropdownMenuItem>
+                              {investment.status === "active" && <DropdownMenuItem>Close Investment</DropdownMenuItem>}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+        ) : (
+          <p>No investments to display.</p>
+        )}
+      </div>
     </div>
   )
 }

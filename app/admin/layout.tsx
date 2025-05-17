@@ -2,40 +2,31 @@ import type { ReactNode } from "react"
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-100">
       <div className="flex min-h-screen">
         <div className="hidden w-64 bg-white shadow-md md:block">
           <div className="flex h-16 items-center justify-center border-b">
-            <h1 className="text-xl font-bold text-emerald-600">Admin Dashboard</h1>
+            <h1 className="text-xl font-bold text-green-600">Admin Dashboard</h1>
           </div>
           <nav className="p-4">
             <ul className="space-y-2">
               <li>
-                <a href="/admin" className="flex items-center rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100">
+                <a href="/admin" className="block rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100">
                   Dashboard
                 </a>
               </li>
               <li>
-                <a
-                  href="/admin/users"
-                  className="flex items-center rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
+                <a href="/admin/users" className="block rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100">
                   Users
                 </a>
               </li>
               <li>
-                <a
-                  href="/admin/transactions"
-                  className="flex items-center rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
+                <a href="/admin/transactions" className="block rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100">
                   Transactions
                 </a>
               </li>
               <li>
-                <a
-                  href="/admin/investments"
-                  className="flex items-center rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
+                <a href="/admin/investments" className="block rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100">
                   Investments
                 </a>
               </li>
@@ -58,16 +49,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               </button>
             </div>
             <div className="flex items-center">
-              <div className="relative">
-                <button className="flex items-center text-gray-700 hover:text-gray-900">
-                  <span className="mr-2">Admin User</span>
-                  <img
-                    src="https://randomuser.me/api/portraits/men/10.jpg"
-                    alt="Admin"
-                    className="h-8 w-8 rounded-full"
-                  />
-                </button>
-              </div>
+              <span className="text-gray-700">Admin User</span>
             </div>
           </header>
           <main className="p-6">{children}</main>

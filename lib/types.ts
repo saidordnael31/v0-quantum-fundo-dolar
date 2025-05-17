@@ -2,8 +2,8 @@ export interface User {
   id: string
   name: string
   email: string
-  role: "admin" | "user"
-  status: "active" | "inactive" | "pending"
+  role: string
+  status: string
   createdAt: string
   profileImage?: string
   totalInvested?: number
@@ -12,10 +12,10 @@ export interface User {
 export interface Transaction {
   id: string
   userId: string
-  type: "deposit" | "withdrawal" | "investment" | "profit" | "fee"
+  type: string
   amount: number
   currency: "USD" | "BTC"
-  status: "completed" | "pending" | "failed" | "cancelled"
+  status: string
   createdAt: string
   description?: string
   paymentMethod?: string
@@ -25,10 +25,10 @@ export interface Transaction {
 export interface Investment {
   id: string
   userId: string
-  strategy: "conservative" | "balanced" | "aggressive" | "quantum"
+  strategy: string
   amount: number
   currency: "USD" | "BTC"
-  status: "active" | "closed" | "pending"
+  status: string
   startDate: string
   endDate?: string
   duration: number
