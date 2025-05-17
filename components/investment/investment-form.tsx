@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Bitcoin, DollarSign, Info, Check, AlertCircle } from "lucide-react"
+import { Bitcoin, DollarSign, Info, Check, AlertCircle, CreditCard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -15,6 +15,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Slider } from "@/components/ui/slider"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useToast } from "@/hooks/use-toast"
+import Link from "next/link"
 
 // Import the action directly
 import { sendInvestmentConfirmationEmail } from "@/app/api/email/actions"
@@ -384,10 +385,16 @@ export function InvestmentForm() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="flex justify-between">
+            <CardFooter className="flex flex-col space-y-2">
               <Button variant="outline" onClick={() => setShowConfirmation(false)}>
                 Back
               </Button>
+              <Link href="/checkout" passHref>
+                <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  Proceed to Payment
+                </Button>
+              </Link>
               <Button onClick={confirmInvestment} disabled={isLoading}>
                 {isLoading ? "Processing..." : "Confirm Investment"}
               </Button>

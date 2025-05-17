@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Award, TrendingUp, Users, Globe } from "lucide-react"
+import { Globe } from "lucide-react"
 
 export const metadata = {
   title: "Sobre Nós | Akin Quantum Hedge Fund Offshore",
@@ -59,76 +59,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Values Section */}
-      <section className="bg-slate-50 py-16 dark:bg-slate-900">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="mb-4 text-3xl font-bold">Nossa Missão e Valores</h2>
-            <p className="text-lg text-muted-foreground">
-              Guiados por princípios sólidos e um compromisso com a excelência.
-            </p>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2">
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="mb-4 text-xl font-bold">Missão</h3>
-                <p className="text-muted-foreground">
-                  Democratizar o acesso a estratégias de investimento de classe mundial, utilizando tecnologia quântica
-                  para criar valor sustentável para nossos investidores, independentemente das condições de mercado.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="mb-4 text-xl font-bold">Visão</h3>
-                <p className="text-muted-foreground">
-                  Ser reconhecidos globalmente como pioneiros na aplicação de tecnologia quântica para investimentos,
-                  estabelecendo novos padrões de desempenho e inovação no setor financeiro.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            <Card>
-              <CardContent className="p-6">
-                <div className="mb-4 rounded-full bg-emerald-100 p-3 w-fit dark:bg-emerald-900/30">
-                  <Award className="h-6 w-6 text-emerald-500" />
-                </div>
-                <h3 className="mb-2 text-lg font-bold">Excelência</h3>
-                <p className="text-muted-foreground">
-                  Buscamos constantemente superar expectativas e estabelecer novos padrões em tudo o que fazemos.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="mb-4 rounded-full bg-emerald-100 p-3 w-fit dark:bg-emerald-900/30">
-                  <TrendingUp className="h-6 w-6 text-emerald-500" />
-                </div>
-                <h3 className="mb-2 text-lg font-bold">Inovação</h3>
-                <p className="text-muted-foreground">
-                  Investimos continuamente em pesquisa e desenvolvimento para manter nossa vantagem tecnológica.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="mb-4 rounded-full bg-emerald-100 p-3 w-fit dark:bg-emerald-900/30">
-                  <Users className="h-6 w-6 text-emerald-500" />
-                </div>
-                <h3 className="mb-2 text-lg font-bold">Integridade</h3>
-                <p className="text-muted-foreground">
-                  Operamos com total transparência e mantemos os mais altos padrões éticos em todas as nossas ações.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+      {/* This section is removed in updates, so it's not included in the merged code */}
 
       {/* Team Section */}
       <section className="py-16">

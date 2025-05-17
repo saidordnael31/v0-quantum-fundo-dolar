@@ -1,0 +1,67 @@
+{
+  "common": {
+    "home": "Inicio",
+    "about": "Sobre Nosotros",
+    "howItWorks": "Cómo Funciona",
+    "faq": "Preguntas Frecuentes",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión",
+    "register": "Crear Cuenta",
+    "dashboard": "Panel",
+    "invest": "Invertir",
+    "portfolio": "Portafolio",
+    "transactions": "Transacciones",
+    "settings": "Configuración",
+    "logout": "Cerrar Sesión"
+  },
+  "landing": {
+    "hero": {
+      "title": "Akin Quantum Hedge Fund Offshore",
+      "subtitle": "Inversiones innovadoras con tecnología cuántica para maximizar sus retornos en el mercado Bitcoin/USD.",
+      "cta": "Comience a Invertir",
+      "learnMore": "Saber Más"
+    },
+    "stats": {
+      "annualReturn": "Retorno Anual",
+      "sharpeRatio": "Ratio Sharpe",
+      "volatility": "Volatilidad",
+      "aum": "Activos Bajo Gestión"
+    },
+    "features": {
+      "title": "¿Por qué elegir Akin Quantum Hedge Fund?",
+      "subtitle": "Nuestro enfoque único combina tecnología cuántica con análisis de mercado tradicional para ofrecer resultados excepcionales.",
+      "quantum": {
+        "title": "Tecnología Cuántica",
+        "description": "Algoritmos cuánticos avanzados que identifican patrones de mercado invisibles para los métodos tradicionales."
+      },
+      "risk": {
+        "title": "Gestión de Riesgos",
+        "description": "Estrategias de protección que minimizan las pérdidas durante períodos de volatilidad extrema."
+      },
+      "diversification": {
+        "title": "Diversificación Inteligente",
+        "description": "Asignación dinámica entre Bitcoin y USD para maximizar los retornos y minimizar los riesgos."
+      }
+    },
+    "cta": {
+      "title": "¿Listo para comenzar?",
+      "subtitle": "Únase a Akin Quantum Hedge Fund Offshore hoy y comience a transformar su cartera de inversiones.",
+      "button": "Crear Cuenta",
+      "contact": "Contáctenos"
+    }
+  },
+  "payment": {
+    "checkout": "Finalizar Compra",
+    "amount": "Monto",
+    "paymentMethod": "Método de Pago",
+    "cardDetails": "Detalles de la Tarjeta",
+    "cardNumber": "Número de Tarjeta",
+    "cardholderName": "Nombre en la Tarjeta",
+    "expiryDate": "Fecha de Vencimiento",
+    "cvv": "CVV",
+    "pay": "Pagar",
+    "processingPayment": "Procesando pago...",
+    "success": "¡Pago realizado con éxito!",
+    "error": "Error en el pago. Por favor, inténtelo de nuevo."
+  }
+}

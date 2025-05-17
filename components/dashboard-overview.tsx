@@ -10,6 +10,7 @@ import { TransactionHistory } from "@/components/transaction-history"
 import { InvestmentOpportunities } from "@/components/investment/investment-opportunities"
 import { useToast } from "@/hooks/use-toast"
 import { Logo } from "@/components/logo"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function DashboardOverview() {
   const { toast } = useToast()
@@ -24,6 +25,7 @@ export function DashboardOverview() {
             <TrendingUp className="h-4 w-4" />
             <span>BTC/USD: $67,245.32</span>
           </div>
+          <LanguageSwitcher />
           <Button
             variant="ghost"
             size="icon"
