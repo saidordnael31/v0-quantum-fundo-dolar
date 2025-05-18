@@ -16,6 +16,10 @@ const nextConfig = {
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
+  // Adicionar configurações para melhorar a estabilidade
+  poweredByHeader: false,
+  reactStrictMode: false,
+  swcMinify: true,
 }
 
 export default nextConfig

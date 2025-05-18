@@ -6,26 +6,22 @@ export function middleware(request: NextRequest) {
   const authToken = request.cookies.get("auth_token")?.value
   const isAuthenticated = !!authToken
 
-  const isAuthPage = request.nextUrl.pathname.startsWith("/auth")
-  const isDashboardPage = request.nextUrl.pathname.startsWith("/dashboard")
-  const isAdminPage = request.nextUrl.pathname.startsWith("/admin")
+  const path = request.nextUrl.pathname
 
-  // Redirecionar usuários não autenticados para a página de login
-  if ((isDashboardPage || isAdminPage) && !isAuthenticated) {
-    const loginUrl = new URL("/auth/login", request.url)
-    return NextResponse.redirect(loginUrl)
+  // Simplificar a lógica para evitar problemas
+  if (path.startsWith("/dashboard") || path.startsWith("/admin")) {
+    if (!isAuthenticated) {
+      return NextResponse.redirect(new URL("/auth/login", request.url))
+    }
   }
 
-  // Redirecionar usuários autenticados da página de login para o dashboard
-  if (isAuthPage && isAuthenticated) {
-    const dashboardUrl = new URL("/dashboard", request.url)
-    return NextResponse.redirect(dashboardUrl)
+  if (path.startsWith("/auth") && isAuthenticated) {
+    return NextResponse.redirect(new URL("/dashboard", request.url))
   }
 
   return NextResponse.next()
 }
 
-// Configurar quais caminhos devem ser processados pelo middleware
 export const config = {
   matcher: ["/dashboard/:path*", "/admin/:path*", "/auth/:path*"],
 }
