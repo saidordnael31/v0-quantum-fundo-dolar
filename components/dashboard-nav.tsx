@@ -39,6 +39,11 @@ export function DashboardNav({ className }: DashboardNavProps) {
       icon: CreditCard,
     },
     {
+      title: "Backtesting",
+      href: "/dashboard/backtesting",
+      icon: LineChart,
+    },
+    {
       title: "Configurações",
       href: "/dashboard/settings",
       icon: Settings,

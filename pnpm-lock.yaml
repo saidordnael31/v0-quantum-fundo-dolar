@@ -31,7 +31,7 @@ importers:
         version: 1.0.0
       '@op-engineering/op-sqlite':
         specifier: latest
-        version: 14.0.0(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.0)(bufferutil@4.0.9)(react@19.0.0))(react@19.0.0)
+        version: 14.0.1(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.0)(bufferutil@4.0.9)(react@19.0.0))(react@19.0.0)
       '@opentelemetry/api':
         specifier: latest
         version: 1.9.0
@@ -180,14 +180,14 @@ importers:
         specifier: latest
         version: 2.8.5
       date-fns:
-        specifier: 4.1.0
+        specifier: latest
         version: 4.1.0
       dotenv:
         specifier: latest
         version: 16.5.0
       drizzle-orm:
         specifier: latest
-        version: 0.43.1(09fc5c380fed57a92ebff7b857e3c140)
+        version: 0.43.1(82b84a6b124b8172adfbef484b35e4e8)
       embla-carousel-react:
         specifier: 8.5.1
         version: 8.5.1(react@19.0.0)
@@ -1506,8 +1506,8 @@ packages:
     engines: {node: '>=10'}
     deprecated: This functionality has been moved to @npmcli/fs
 
-  '@op-engineering/op-sqlite@14.0.0':
-    resolution: {integrity: sha512-/jgd5gadtSy9n81qimTt3JRSKI927pbolg4qtjxWsMvpSQd/KoICcdjOSNjo7oph5EPd7d5xW1w9RKKeA3YYag==}
+  '@op-engineering/op-sqlite@14.0.1':
+    resolution: {integrity: sha512-iReH0IxdtIAwJ6BF5JA+mQczmeQTaVjhLNHQVraZ4+s3ulgOq9UM0lV5XzKsrvaxtUykCc0FAnShg+nTYtHM4Q==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -7800,7 +7800,7 @@ snapshots:
       rimraf: 3.0.2
     optional: true
 
-  '@op-engineering/op-sqlite@14.0.0(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.0)(bufferutil@4.0.9)(react@19.0.0))(react@19.0.0)':
+  '@op-engineering/op-sqlite@14.0.1(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.0)(bufferutil@4.0.9)(react@19.0.0))(react@19.0.0)':
     dependencies:
       react: 19.0.0
       react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.0.0)(bufferutil@4.0.9)(react@19.0.0)
@@ -10012,7 +10012,7 @@ snapshots:
 
   dotenv@16.5.0: {}
 
-  drizzle-orm@0.43.1(09fc5c380fed57a92ebff7b857e3c140):
+  drizzle-orm@0.43.1(82b84a6b124b8172adfbef484b35e4e8):
     optionalDependencies:
       '@aws-sdk/client-rds-data': 3.812.0
       '@cloudflare/workers-types': 4.20250517.0
@@ -10020,7 +10020,7 @@ snapshots:
       '@libsql/client': 0.15.6(bufferutil@4.0.9)
       '@libsql/client-wasm': 0.15.6
       '@neondatabase/serverless': 1.0.0
-      '@op-engineering/op-sqlite': 14.0.0(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.0)(bufferutil@4.0.9)(react@19.0.0))(react@19.0.0)
+      '@op-engineering/op-sqlite': 14.0.1(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.0)(bufferutil@4.0.9)(react@19.0.0))(react@19.0.0)
       '@opentelemetry/api': 1.9.0
       '@planetscale/database': 1.19.0
       '@prisma/client': 6.8.2(typescript@5.0.2)

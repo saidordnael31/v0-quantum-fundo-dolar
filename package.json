@@ -66,7 +66,7 @@
     "cmdk": "1.0.4",
     "cookies-next": "latest",
     "cors": "latest",
-    "date-fns": "4.1.0",
+    "date-fns": "latest",
     "dotenv": "latest",
     "drizzle-orm": "latest",
     "embla-carousel-react": "8.5.1",

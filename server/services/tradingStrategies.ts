@@ -151,7 +151,7 @@ export async function evaluateStrategies(symbol: string, currentPrice: number, s
 }
 
 // Função para calcular MACD
-function calculateMACD(prices: number[], fastPeriod = 12, slowPeriod = 26, signalPeriod = 9) {
+export function calculateMACD(prices: number[], fastPeriod = 12, slowPeriod = 26, signalPeriod = 9) {
   if (prices.length < slowPeriod + signalPeriod) {
     return null
   }
@@ -205,7 +205,7 @@ function calculateEMA(prices: number[], period: number) {
 }
 
 // Função para calcular RSI
-function calculateRSI(prices: number[], period = 14) {
+export function calculateRSI(prices: number[], period = 14) {
   if (prices.length < period + 1) {
     return null
   }
@@ -241,7 +241,7 @@ function calculateRSI(prices: number[], period = 14) {
 }
 
 // Função para calcular Bandas de Bollinger
-function calculateBollingerBands(prices: number[], period = 20, stdDev = 2) {
+export function calculateBollingerBands(prices: number[], period = 20, stdDev = 2) {
   if (prices.length < period) {
     return null
   }
@@ -266,7 +266,7 @@ function calculateBollingerBands(prices: number[], period = 20, stdDev = 2) {
 }
 
 // Função para avaliar estratégia MACD
-function evaluateMACDStrategy(prices: number[], strategy: any) {
+export function evaluateMACDStrategy(prices: number[], strategy: any) {
   const params = strategy.parameters
   const fastPeriod = params.fastPeriod || 12
   const slowPeriod = params.slowPeriod || 26
@@ -307,7 +307,7 @@ function evaluateMACDStrategy(prices: number[], strategy: any) {
 }
 
 // Função para avaliar estratégia RSI
-function evaluateRSIStrategy(prices: number[], strategy: any) {
+export function evaluateRSIStrategy(prices: number[], strategy: any) {
   const params = strategy.parameters
   const period = params.period || 14
   const overbought = params.overbought || 70
@@ -339,7 +339,7 @@ function evaluateRSIStrategy(prices: number[], strategy: any) {
 }
 
 // Função para avaliar estratégia Bollinger Bands
-function evaluateBollingerStrategy(prices: number[], strategy: any) {
+export function evaluateBollingerStrategy(prices: number[], strategy: any) {
   const params = strategy.parameters
   const period = params.period || 20
   const stdDev = params.stdDev || 2
@@ -347,7 +347,7 @@ function evaluateBollingerStrategy(prices: number[], strategy: any) {
   // Calcular Bandas de Bollinger
   const bollinger = calculateBollingerBands(prices, period, stdDev)
 
-  if (!bollinger) {
+  if (bollinger === null) {
     return null
   }
 
