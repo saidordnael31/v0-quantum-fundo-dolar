@@ -34,13 +34,14 @@ export function LoginForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    // Simulate API call
+    // Simulação de login com redirecionamento adequado
     setTimeout(() => {
       setIsLoading(false)
       toast({
         title: "Login successful",
         description: "Welcome back to Akin Quantum Hedge Fund Offshore",
       })
+      // Usar router.push em vez de window.location para evitar problemas de método HTTP
       router.push("/dashboard")
     }, 1500)
   }
