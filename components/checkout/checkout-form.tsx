@@ -9,9 +9,10 @@ import { Check, CreditCard, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
+import { PayPalButton } from "@/components/paypal/paypal-button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const formSchema = z.object({
   amount: z.string().min(1, {
@@ -29,17 +30,20 @@ export function CheckoutForm() {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [paymentSuccess, setPaymentSuccess] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState("card")
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      amount: "10000",
+      amount: "100",
       name: "",
       email: "",
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (paymentMethod !== "card") return
+
     setIsLoading(true)
 
     try {
@@ -65,6 +69,12 @@ export function CheckoutForm() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handlePayPalSuccess = (details: any) => {
+    setPaymentSuccess(true)
+    // Você pode fazer algo com os detalhes do pagamento aqui
+    console.log("PayPal payment successful:", details)
   }
 
   return (
@@ -94,30 +104,12 @@ export function CheckoutForm() {
             />
 
             <div className="space-y-4">
-              <FormLabel>Payment Method</FormLabel>
-              <Select defaultValue="card">
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="card">Credit/Debit Card</SelectItem>
-                  <SelectItem value="bank" disabled>
-                    Bank Transfer (Coming Soon)
-                  </SelectItem>
-                  <SelectItem value="crypto" disabled>
-                    Cryptocurrency (Coming Soon)
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-4">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Cardholder Name</FormLabel>
+                    <FormLabel>Full Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -139,38 +131,53 @@ export function CheckoutForm() {
                   </FormItem>
                 )}
               />
+            </div>
 
-              <div className="space-y-2">
-                <FormLabel>Card Details</FormLabel>
-                <div className="rounded-md border border-input p-3">
-                  <div className="p-2 text-sm text-gray-500">
-                    <p>Demo mode active - No actual payment processing</p>
-                    <p className="mt-1">Any information will be accepted for testing</p>
+            <Tabs defaultValue="card" onValueChange={setPaymentMethod}>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="card">Credit Card</TabsTrigger>
+                <TabsTrigger value="paypal">PayPal</TabsTrigger>
+              </TabsList>
+              <TabsContent value="card" className="space-y-4 mt-4">
+                <div className="space-y-2">
+                  <FormLabel>Card Details</FormLabel>
+                  <div className="rounded-md border border-input p-3">
+                    <div className="p-2 text-sm text-gray-500">
+                      <p>Demo mode active - No actual payment processing</p>
+                      <p className="mt-1">Any information will be accepted for testing</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+                <Button type="submit" className="w-full mt-4" disabled={isLoading || paymentSuccess}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Processing Payment
+                    </>
+                  ) : paymentSuccess ? (
+                    <>
+                      <Check className="mr-2 h-4 w-4" />
+                      Payment Successful
+                    </>
+                  ) : (
+                    <>
+                      <CreditCard className="mr-2 h-4 w-4" />
+                      Pay with Card
+                    </>
+                  )}
+                </Button>
+              </TabsContent>
+              <TabsContent value="paypal" className="mt-4">
+                <div className="rounded-md border border-input p-3 mb-4">
+                  <div className="p-2 text-sm text-gray-500">
+                    <p>PayPal integration is in sandbox mode</p>
+                    <p className="mt-1">No actual charges will be made</p>
+                  </div>
+                </div>
+                <PayPalButton amount={form.getValues("amount")} onSuccess={handlePayPalSuccess} />
+              </TabsContent>
+            </Tabs>
           </CardContent>
-          <CardFooter>
-            <Button type="submit" className="w-full" disabled={isLoading || paymentSuccess}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Processing Payment
-                </>
-              ) : paymentSuccess ? (
-                <>
-                  <Check className="mr-2 h-4 w-4" />
-                  Payment Successful
-                </>
-              ) : (
-                <>
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  Pay Now
-                </>
-              )}
-            </Button>
-          </CardFooter>
         </Card>
       </form>
     </Form>
