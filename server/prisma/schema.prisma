@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Histórico de preços
+model PriceHistory {
+  id        String   @id @default(uuid())
+  symbol    String
+  price     Float
+  volume    Float
+  marketCap Float
+  timestamp DateTime
+
+  @@index([symbol, timestamp])
+}
+
+// Alertas configurados pelos usuários
+model Alert {
+  id        String   @id @default(uuid())
+  userId    String
+  symbol    String
+  condition String   // "above" ou "below"
+  price     Float
+  strategy  String?  // "MACD", "RSI", "BOLLINGER", etc.
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, symbol])
+  @@index([active])
+}
+
+// Notificações enviadas aos usuários
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  symbol    String
+  message   String
+  type      String   // "price" ou "strategy"
+  strategy  String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
+}
+
+// Estratégias salvas pelos usuários
+model Strategy {
+  id          String   @id @default(uuid())
+  userId      String
+  name        String
+  description String?
+  type        String   // "MACD", "RSI", "BOLLINGER", etc.
+  parameters  Json     // Parâmetros específicos da estratégia
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// Backtest de estratégias
+model Backtest {
+  id         String   @id @default(uuid())
+  userId     String
+  strategyId String
+  symbol     String
+  startDate  DateTime
+  endDate    DateTime
+  results    Json     // Resultados detalhados
+  profit     Float    // Lucro/prejuízo percentual
+  trades     Int      // Número de trades
+  createdAt  DateTime @default(now())
+
+  @@index([userId, strategyId])
+}
